@@ -23,48 +23,48 @@ export class Store extends EventEmitter  {
     return value;
   }
 
-  set(path: string, value: any, payload?: any) {
-    operators.$set(payload ? { store: this.data, payload } : this.data, path, value);
+  set(path: string, value: any, data?: any) {
+    operators.$set(data ? { store: this.data, data } : this.data, path, value);
   }
 
-  inc(path: string, value: number | string, payload?: any) {
-    operators.$inc(payload ? { store: this.data, payload } : this.data, path, value);
+  inc(path: string, value: number | string, data?: any) {
+    operators.$inc(data ? { store: this.data, data } : this.data, path, value);
   }
 
-  mul(path: string, value: number | string, payload?: any) {
-    operators.$mul(payload ? { store: this.data, payload } : this.data, path, value);
+  mul(path: string, value: number | string, data?: any) {
+    operators.$mul(data ? { store: this.data, data } : this.data, path, value);
   }
 
-  push(path: string, value: any, payload?: any) {
-    operators.$push(payload ? { store: this.data, payload } : this.data, path, value);
+  push(path: string, value: any, data?: any) {
+    operators.$push(data ? { store: this.data, data } : this.data, path, value);
   }
 
-  unshift(path: string, value: any, payload?: any) {
-    operators.$unshift(payload ? { store: this.data, payload } : this.data, path, value);
+  unshift(path: string, value: any, data?: any) {
+    operators.$unshift(data ? { store: this.data, data } : this.data, path, value);
   }
 
-  pop(path: string, value: number | string, payload?: any) {
-    operators.$pop(payload ? { store: this.data, payload } : this.data, path, value);
+  pop(path: string, value: number | string, data?: any) {
+    operators.$pop(data ? { store: this.data, data } : this.data, path, value);
   }
 
-  shift(path: string, value: number | string, payload?: any) {
-    operators.$shift(payload ? { store: this.data, payload } : this.data, path, value);
+  shift(path: string, value: number | string, data?: any) {
+    operators.$shift(data ? { store: this.data, data } : this.data, path, value);
   }
 
-  pull(path: string, value: number | string | boolean | ISchema, payload?: any) {
-    operators.$pull(payload ? { store: this.data, payload } : this.data, path, value);
+  pull(path: string, value: number | string | boolean | ISchema, data?: any) {
+    operators.$pull(data ? { store: this.data, data } : this.data, path, value);
   }
 
-  splice(path: string, value: [number | string, number | string, any?], payload?: any) {
-    operators.$splice(payload ? { store: this.data, payload } : this.data, path, value);
+  splice(path: string, value: [number | string, number | string, any?], data?: any) {
+    operators.$splice(data ? { store: this.data, data } : this.data, path, value);
   }
 
-  concat(path: string, value: string[], payload?: any) {
-    operators.$concat(payload ? { store: this.data, payload } : this.data, path, value);
+  concat(path: string, value: string[], data?: any) {
+    operators.$concat(data ? { store: this.data, data } : this.data, path, value);
   }
 
-  delete(path: string, value: number, payload?: any) {
-    operators.$delete(payload ? { store: this.data, payload } : this.data, path);
+  delete(path: string, value: number, data?: any) {
+    operators.$delete(data ? { store: this.data, data } : this.data, path);
   }
 
   update(options: IUpdateOptions, data?: any) {

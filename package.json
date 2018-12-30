@@ -1,6 +1,6 @@
 {
-  "name": "store",
-  "version": "0.0.1",
+  "name": "gypsum-store",
+  "version": "0.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
