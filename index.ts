@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import { IUpdateOptions } from "./query";
+import { IUpdateOptions } from "./interface";
 import { getValue } from 'tools-box/object/get-value';
 import { objFromMap } from 'tools-box/object/object-from-map';
 import { extend } from 'tools-box/object/extend';
@@ -23,59 +23,98 @@ export class Store extends EventEmitter  {
     return value;
   }
 
-  set(path: string, value: any, data?: any) {
-    operators.$set(data ? { store: this.data, data } : this.data, path, value);
-  }
-
-  inc(path: string, value: number | string, data?: any) {
-    operators.$inc(data ? { store: this.data, data } : this.data, path, value);
-  }
-
-  mul(path: string, value: number | string, data?: any) {
-    operators.$mul(data ? { store: this.data, data } : this.data, path, value);
-  }
-
-  push(path: string, value: any, data?: any) {
-    operators.$push(data ? { store: this.data, data } : this.data, path, value);
-  }
-
-  unshift(path: string, value: any, data?: any) {
-    operators.$unshift(data ? { store: this.data, data } : this.data, path, value);
-  }
-
-  pop(path: string, value: number | string, data?: any) {
-    operators.$pop(data ? { store: this.data, data } : this.data, path, value);
-  }
-
-  shift(path: string, value: number | string, data?: any) {
-    operators.$shift(data ? { store: this.data, data } : this.data, path, value);
-  }
-
-  pull(path: string, value: number | string | boolean | ISchema, data?: any) {
-    operators.$pull(data ? { store: this.data, data } : this.data, path, value);
-  }
-
-  splice(path: string, value: [number | string, number | string, any?], data?: any) {
-    operators.$splice(data ? { store: this.data, data } : this.data, path, value);
-  }
-
-  concat(path: string, value: string[], data?: any) {
-    operators.$concat(data ? { store: this.data, data } : this.data, path, value);
-  }
-
-  delete(path: string, value: number, data?: any) {
-    operators.$delete(data ? { store: this.data, data } : this.data, path);
-  }
-
-  update(options: IUpdateOptions, data?: any) {
-    for (let option in options)
-      for (let key in (<any>options)[option])
-        (<any>operators)[option](data ? {store: this.data, data} : this.data, key, (<any>options)[option][key]);
-
+  set(path: string, value: any, payload?: any) {
+    this.data.payload = payload;
+    this.data.payload = payload;
+    operators.$set(this.data, path, value);
+    delete this.data.payload;
     this.emit('update', extend({}, this.data));
   }
 
-  extract(map: any, target = {}, data?: any): any {
-    return objFromMap(data ? {store: this.data, data} : this.data, target, map);
+  inc(path: string, value: number | string, payload?: any) {
+    this.data.payload = payload;
+    operators.$inc(this.data, path, value);
+    delete this.data.payload;
+    this.emit('update', extend({}, this.data));
+  }
+
+  mul(path: string, value: number | string, payload?: any) {
+    this.data.payload = payload;
+    operators.$mul(this.data, path, value);
+    delete this.data.payload;
+    this.emit('update', extend({}, this.data));
+  }
+
+  push(path: string, value: any, payload?: any) {
+    this.data.payload = payload;
+    operators.$push(this.data, path, value);
+    delete this.data.payload;
+    this.emit('update', extend({}, this.data));
+  }
+
+  unshift(path: string, value: any, payload?: any) {
+    this.data.payload = payload;
+    operators.$unshift(this.data, path, value);
+    delete this.data.payload;
+    this.emit('update', extend({}, this.data));
+  }
+
+  pop(path: string, value: number | string, payload?: any) {
+    this.data.payload = payload;
+    operators.$pop(this.data, path, value);
+    delete this.data.payload;
+    this.emit('update', extend({}, this.data));
+  }
+
+  shift(path: string, value: number | string, payload?: any) {
+    this.data.payload = payload;
+    operators.$shift(this.data, path, value);
+    delete this.data.payload;
+    this.emit('update', extend({}, this.data));
+  }
+
+  pull(path: string, value: number | string | boolean | ISchema, payload?: any) {
+    this.data.payload = payload;
+    operators.$pull(this.data, path, value);
+    delete this.data.payload;
+    this.emit('update', extend({}, this.data));
+  }
+
+  splice(path: string, value: [number | string, number | string, any?], payload?: any) {
+    this.data.payload = payload;
+    operators.$splice(this.data, path, value);
+    delete this.data.payload;
+    this.emit('update', extend({}, this.data));
+  }
+
+  concat(path: string, value: string[], payload?: any) {
+    this.data.payload = payload;
+    operators.$concat(this.data, path, value);
+    delete this.data.payload;
+    this.emit('update', extend({}, this.data));
+  }
+
+  delete(path: string, value: number, payload?: any) {
+    this.data.payload = payload;
+    operators.$delete(this.data, path);
+    delete this.data.payload;
+    this.emit('update', extend({}, this.data));
+  }
+
+  update(options: IUpdateOptions, payload?: any) {
+    this.data.payload = payload;
+    for (let option in options)
+      for (let key in (<any>options)[option])
+        (<any>operators)[option](this.data, key, (<any>options)[option][key]);
+
+    delete this.data.payload;
+    this.emit('update', extend({}, this.data));
+  }
+
+  extract(map: any, target = {}, payload?: any): any {
+    this.data.payload = payload;
+    let result = objFromMap(this.data, target, map);
+    delete this.data.payload;
+    return result;
   }
 }

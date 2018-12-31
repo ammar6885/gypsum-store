@@ -5,6 +5,7 @@ import { ISchema } from 'validall/schema';
 import { extend } from 'tools-box/object/extend';
 import { cleanPropPath } from 'tools-box/object/clean-prop-path';
 import { objFromMap } from 'tools-box/object/object-from-map';
+import { strSplice } from 'tools-box/string/str-splice';
 
 function getValFromStr(src: any, path: string): any {
   return path.charAt(0) === '$'
@@ -202,7 +203,7 @@ export const operators = {
   $splice(src: any, path: string, value: [number | string, number | string, any?]) {
     src.self = getValue(src, path);
 
-    if (!src.self || !Array.isArray(src.self)) {
+    if (!src.self || (!Array.isArray(src.self) && typeof src.self !== 'string')) {
       delete src.self;
       return;
     }
@@ -224,9 +225,9 @@ export const operators = {
         }
 
         if (Array.isArray(currVal))
-          src.self.splice(start, count, ...currVal);
+          typeof src.self === 'string' ? src.self = strSplice(src.self, start, count, ...currVal) : src.self.splice(start, count, ...currVal);
         else
-          src.self.splice(start, count, currVal);
+          typeof src.self === 'string' ? src.self = strSplice(src.self, start, count, currVal) : src.self.splice(start, count, currVal);
       }
 
     } else {
