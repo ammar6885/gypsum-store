@@ -5,6 +5,7 @@ import { objFromMap } from 'tools-box/object/object-from-map';
 import { extend } from 'tools-box/object/extend';
 import { operators } from './operators';
 import { ISchema } from 'validall/schema';
+import { validate } from 'validall';
 
 export class Store extends EventEmitter  {
   private data: any;
@@ -116,5 +117,31 @@ export class Store extends EventEmitter  {
     let result = objFromMap(this.data, target, map);
     delete this.data.payload;
     return result;
+  }
+
+  validate(schema: ISchema, payload?: any) {
+    this.data.payload = payload;
+    delete schema.$filter;
+    let err = validate(this.data, schema);
+    delete this.data.payload;
+    return err;
+  }
+
+  find(path: string, schema: ISchema) {
+    let list = getValue(this.data, path);
+
+    if (!Array.isArray(list))
+      return null;
+
+    if (list.length === 0)
+      return [];
+
+    let filteredList = [];
+    
+    for (let i = 0; i < list.length; i++)
+      if (!validate(list[i], schema))
+        filteredList.push(list[i]);
+
+    return filteredList;
   }
 }
