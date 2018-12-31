@@ -11,7 +11,8 @@ let store = new Store({
     ]
   },
   kit: ['laptop', 'bag', 'pencil', 'paper'],
-  tasks: ['task1', 'task2', 'task3', 'task4', 'task5']
+  tasks: ['task1', 'task2', 'task3', 'task4', 'task5'],
+  limit: 2
 });
 
 // store.on('update', data => {
@@ -32,4 +33,4 @@ let store = new Store({
 //   drop: ['bag']
 // });
 
-console.log(store.validate({ $paths: { 'payload.age': { $gt: 2 } } }, { age: 3 }));
+console.log(store.validate({ $paths: { 'payload.age': { $gt: '$limit' } } }, { age: 3 }));
