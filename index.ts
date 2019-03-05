@@ -102,11 +102,13 @@ export class Store extends EventEmitter  {
     this.emit('update', extend({}, this.data));
   }
 
-  update(options: IUpdateOptions, payload?: any) {
+  update(options: IUpdateOptions[], payload?: any) {
     this.data.payload = payload;
-    for (let option in options)
-      for (let key in (<any>options)[option])
-        (<any>operators)[option](this.data, key, (<any>options)[option][key]);
+    for (let i = 0; i < options.length; i++) {
+      for (let option in options[i])
+        for (let key in (<any>options[i])[option])
+          (<any>operators)[option](this.data, key, (<any>options[i])[option][key]);
+    }
 
     delete this.data.payload;
     this.emit('update', extend({}, this.data));

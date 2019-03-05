@@ -32,5 +32,6 @@ let store = new Store({
 //   yasser: { name: 'Yasser', age: 2 },
 //   drop: ['bag']
 // });
+store.update([{ $set: { age: '$payload.age' } }, { $inc: { age: 1 } } ], { age: 3 })
 
-console.log(store.validate({ $paths: { 'payload.age': { $gt: '$limit' } } }, { age: 3 }));
+console.log(store.get());
