@@ -240,7 +240,7 @@ export const operators = {
   $delete(src: any, path: string) {
     let parts = cleanPropPath(path).split('.');
 
-    if (parts.length === 0) {
+    if (parts.length === 1) {
       delete src[path];
       return;
     }

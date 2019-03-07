@@ -32,6 +32,6 @@ let store = new Store({
 //   yasser: { name: 'Yasser', age: 2 },
 //   drop: ['bag']
 // });
-store.update([{ $set: { age: '$payload.age' } }, { $inc: { age: 1 } } ], { age: 3 })
+store.update([{ $delete: {age: '',  'family.wife': '', 'tasks.2': '' } }]);
 
 console.log(store.get());
