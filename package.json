@@ -1,6 +1,6 @@
 {
   "name": "gypsum-store",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "tools-box": "^0.1.20",
-    "validall": "^3.0.10"
+    "validall": "^3.0.12"
   }
 }
