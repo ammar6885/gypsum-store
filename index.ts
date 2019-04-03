@@ -116,7 +116,7 @@ export class Store extends EventEmitter  {
 
   extract(map: any, target = {}, payload?: any, ignoreKeys = false): any {
     this.data.payload = payload;
-    let result = objFromMap(this.data, target, map, ignoreKeys);
+    let result = objFromMap(this.data, target, map, { ignoreKeys });
     delete this.data.payload;
     return result;
   }
@@ -124,7 +124,7 @@ export class Store extends EventEmitter  {
   validate(schema: ISchema, payload?: any) {
     this.data.payload = payload;
     delete schema.$filter;
-    let err = validate(this.data, objFromMap(this.data, {}, schema, true));
+    let err = validate(this.data, objFromMap(this.data, {}, schema, { ignoreKeys: true }));
     delete this.data.payload;
     return err;
   }
@@ -141,7 +141,7 @@ export class Store extends EventEmitter  {
     let filteredList = [];
     
     for (let i = 0; i < list.length; i++)
-      if (!validate(list[i], objFromMap(this.data, {}, schema, true)))
+      if (!validate(list[i], objFromMap(this.data, {}, schema, { ignoreKeys: true })))
         filteredList.push(list[i]);
 
     return filteredList;
