@@ -6,14 +6,7 @@ import { extend } from 'tools-box/object/extend';
 import { cleanPropPath } from 'tools-box/object/clean-prop-path';
 import { objFromMap } from 'tools-box/object/object-from-map';
 import { strSplice } from 'tools-box/string/str-splice';
-
-function getValFromStr(src: any, path: string): any {
-  return path.charAt(0) === '$'
-    ? path.charAt(1) === '$'
-      ? getValue(src, path.slice(2)).toString()
-      : getValue(src, path.slice(1))
-    : path;
-}
+import { getValFromStr, readers, IReaderOptions } from './readers';
 
 export const operators = {
   $set(src: any, path: string, value: any): void {
@@ -23,6 +16,24 @@ export const operators = {
       injectValue(src, path, getValFromStr(src, value));
       delete src.self;
       return;
+    }
+
+    if (typeof value === 'object' && !Array.isArray(value)) {
+      let keys = <(keyof IReaderOptions)[]>Object.keys(value);
+
+      if (keys.length === 1 && keys[0] in readers) {
+        let options = value[keys[0]];
+
+        if (typeof options === 'string') {
+          injectValue(src, path, readers[<"$value">keys[0]](src, options));
+        } else {
+          options.params = options.params || [];
+          injectValue(src, path, readers[<"$fn">keys[0]](src, options.path, options.cb, ...options.params));
+        }
+        
+        delete src.self;
+        return
+      }
     }
 
     if (Array.isArray(value)) {
