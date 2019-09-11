@@ -12,7 +12,13 @@ export const operators = {
   $set(src: any, path: string, value: any): void {
     src.self = getValue(src, path);
 
-    if (typeof value == 'string') {
+    if (!value) {
+      injectValue(src, path, value);
+      delete src.self;
+      return;
+    }
+
+    if (typeof value === 'string') {
       injectValue(src, path, getValFromStr(src, value));
       delete src.self;
       return;
