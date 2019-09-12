@@ -12,4 +12,5 @@ export interface IUpdateOptions {
   $splice?: {[key: string]: [number | string, number | string, any?] };
   $concat?: {[key: string]: string[] };
   $delete?: {[key: string]: any};
+  $log?: {[key: string]: 0 | 1};
 }

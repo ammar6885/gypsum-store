@@ -3,6 +3,7 @@ import { IReaderOptions } from './readers';
 
 let store = new Store();
 
-store.set("auth", null);
-
-console.log(store.get());
+store.update([
+  { $set: { name: 'Ammar' } },
+  { $log: { '*': 1, name: 1 } }
+]);

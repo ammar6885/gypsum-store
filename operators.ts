@@ -287,5 +287,16 @@ export const operators = {
 
     injectValue(src, path, str);
     delete src.self;
+  },
+
+  $log(src: any, path: string, value: 0 | 1) {
+    if (value === 0)
+      return;
+
+    console.log('store log:');
+    if (path === '*')
+      return console.log(src);
+
+    return console.log(getValue(src, path));
   }
 }
