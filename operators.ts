@@ -265,7 +265,18 @@ export const operators = {
     let temp = src[parts[0]];
 
     for (let i = 1; i < parts.length; i++) {
+      
+      if (parts[i] === '$' && Array.isArray(temp)) {
+        let newPath = parts.slice(i + 1).join('.');
+        
+        for (let j = 0; j < temp.length; j++)
+          this.$delete(temp[j], newPath);
+
+        return;
+      }
+
       if (temp && temp.hasOwnProperty(parts[i])) {
+
         if (i === parts.length - 1) {
           delete temp[parts[i]];
           break;
