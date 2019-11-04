@@ -8,8 +8,8 @@ let store = new Store({
   }
 });
 
-store.update([
-  { $log: { family: 1 } },
-  { $delete: { 'family.children.$.age': 1 } },
-  { $log: { family: 1 } }
-]);
+console.log(store.data);
+
+store.reset();
+
+console.log(store.data);
