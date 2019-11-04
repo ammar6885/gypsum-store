@@ -146,4 +146,8 @@ export class Store extends EventEmitter  {
 
     return filteredList;
   }
+
+  reset() {
+    this.data = {};
+  }
 }
